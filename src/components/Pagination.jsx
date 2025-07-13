@@ -3,7 +3,6 @@
 export default function Pagination({ links, meta, onPageChange }) {
   const currentPage = meta?.current_page || 1;
   const lastPage = meta?.last_page || 1;
-
   const renderPageNumbers = () => {
     const pages = [];
     const maxVisible = 5;
@@ -12,7 +11,6 @@ export default function Pagination({ links, meta, onPageChange }) {
     if (endPage - startPage + 1 < maxVisible) {
       startPage = Math.max(1, endPage - maxVisible + 1);
     }
-
     for (let i = startPage; i <= endPage; i++) {
       pages.push(
         <button
@@ -31,14 +29,11 @@ export default function Pagination({ links, meta, onPageChange }) {
         </button>
       );
     }
-
     return pages;
   };
-
   return (
     <div className="flex justify-center mt-8">
       <div className="flex items-center gap-1">
-        {/* First Page */}
         <button
           onClick={() => onPageChange(links.first)}
           disabled={!links.prev}
@@ -50,8 +45,6 @@ export default function Pagination({ links, meta, onPageChange }) {
         >
           &lt;&lt;
         </button>
-
-        {/* Previous Page */}
         <button
           onClick={() => onPageChange(links.prev)}
           disabled={!links.prev}
@@ -63,11 +56,7 @@ export default function Pagination({ links, meta, onPageChange }) {
         >
           &lt;
         </button>
-
-        {/* Page Numbers */}
         {renderPageNumbers()}
-
-        {/* Next Page */}
         <button
           onClick={() => onPageChange(links.next)}
           disabled={!links.next}
@@ -79,8 +68,6 @@ export default function Pagination({ links, meta, onPageChange }) {
         >
           &gt;
         </button>
-
-        {/* Last Page */}
         <button
           onClick={() => onPageChange(links.last)}
           disabled={currentPage === lastPage}

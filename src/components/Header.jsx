@@ -6,7 +6,7 @@ import Link from 'next/link';
 export default function Header() {
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [activePage, setActivePage] = useState('ideas'); // Default ke 'ideas'
+  const [activePage, setActivePage] = useState('ideas');
 
   const menuItems = [
     { name: 'work', href: '/work' },
@@ -21,13 +21,12 @@ export default function Header() {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       if (currentScrollY > lastScrollY && currentScrollY > 50) {
-        setIsVisible(false); // Hilang saat scroll ke bawah
+        setIsVisible(false);
       } else {
-        setIsVisible(true); // Muncul saat scroll ke atas
+        setIsVisible(true);
       }
       setLastScrollY(currentScrollY);
     };
-
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);

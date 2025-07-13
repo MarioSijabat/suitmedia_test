@@ -79,35 +79,51 @@ export default function IdeasList() {
             Showing {pagination.meta.from || 1} - {pagination.meta.to || perPage} of {pagination.meta.total || 0}
           </div>
         </div>
-
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-900">Show per page:</span>
-            <select
-              value={perPage}
-              onChange={(e) => handleItemsPerPageChange(e.target.value)}
-              className="border border-gray-600 rounded-md px-3 py-2 text-sm text-gray-900"
-            >
-              {[10, 20, 50].map(size => (
-                <option key={size} value={size}>{size}</option>
-              ))}
-            </select>
+            <div className="relative">
+              <select
+                value={perPage}
+                onChange={(e) => handleItemsPerPageChange(e.target.value)}
+                className="border border-gray-600 rounded-full gap-x-4 px-3 py-2 text-sm text-gray-900 pr-8 appearance-none opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+              >
+                {[10, 20, 50].map(size => (
+                  <option key={size} value={size}>{size}</option>
+                ))}
+              </select>
+              <div className="border border-gray-600 rounded-full gap-x-4 px-3 py-2 text-sm text-gray-900 flex items-center justify-between">
+                <span>{perPage}</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M18 9.5L12 15.5L6 9.5H18Z" fill="#8B8B8B" stroke="#8B8B8B" strokeWidth="2" strokeLinejoin="round"/>
+                </svg>
+              </div>
+            </div>
           </div>
           <span className="text-sm text-gray-900">Sort by:</span>
-          <select
-            value={sort}
-            onChange={(e) => {
-              const params = new URLSearchParams(searchParams);
-              params.set('sort', e.target.value);
-              params.set('page', '1');
-              router.push(`?${params.toString()}`);
-            }}
-            className="border border-gray-600 rounded-md px-3 py-2 text-sm text-gray-900"
-          >
-            <option value="-published_at">Newest</option>
-            <option value="published_at">Oldest</option>
-          </select>
+          <div className="relative">
+            <select
+              value={sort}
+              onChange={(e) => {
+                const params = new URLSearchParams(searchParams);
+                params.set('sort', e.target.value);
+                params.set('page', '1');
+                router.push(`?${params.toString()}`);
+              }}
+              className="border border-gray-600 rounded-full gap-x-4 px-2 py-2 text-sm text-gray-900 pr-8 appearance-none opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+            >
+              <option value="-published_at">Newest</option>
+              <option value="published_at">Oldest</option>
+            </select>
+            <div className="border border-gray-600 rounded-full gap-x-4 px-3 py-2 text-sm text-gray-900 flex items-center justify-between">
+              <span>{sort === '-published_at' ? 'Newest' : 'Oldest'}</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 9.5L12 15.5L6 9.5H18Z" fill="#8B8B8B" stroke="#8B8B8B" strokeWidth="2" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
         </div>
+
       </div>
 
       <div className="grid sm:grid-cols-1 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-6">
@@ -116,7 +132,7 @@ export default function IdeasList() {
             {item.small_image?.[0]?.url && (
               <div className="aspect-w-16 aspect-h-9 bg-white">
               <Image
-                src="/placeholder.jpg" // Langsung gunakan placeholder
+                src="/placeholder.jpg"
                 alt={item.title}
                 width={300}
                 height={169}

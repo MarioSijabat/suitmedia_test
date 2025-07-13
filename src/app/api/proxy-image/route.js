@@ -9,7 +9,6 @@ export async function GET(request) {
   }
 
   try {
-    // Cek cache dulu
     const cached = await checkCache(imageUrl);
     if (cached) {
       return new Response(cached.buffer, {
@@ -21,7 +20,6 @@ export async function GET(request) {
       });
     }
 
-    // Jika tidak ada di cache, download dari sumber asli
     const decodedUrl = decodeURIComponent(imageUrl);
     const response = await fetch(decodedUrl, {
       headers: {
@@ -32,7 +30,6 @@ export async function GET(request) {
     });
 
     if (!response.ok) {
-      // Jika response 403/Forbidden, coba dengan header berbeda
       if (response.status === 403) {
         return new Response(JSON.stringify({
           error: 'Forbidden',
@@ -53,7 +50,6 @@ export async function GET(request) {
     const contentType = response.headers.get('content-type') || 'image/jpeg';
     const buffer = await response.arrayBuffer();
 
-    // Verifikasi bahwa ini benar-benar gambar
     if (!contentType.startsWith('image/')) {
       const bodyText = await response.text();
       console.error('Invalid content received:', {
@@ -67,7 +63,6 @@ export async function GET(request) {
       });
     }
 
-    // Simpan ke cache
     await saveToCache(imageUrl, Buffer.from(buffer), contentType);
 
     return new Response(Buffer.from(buffer), {

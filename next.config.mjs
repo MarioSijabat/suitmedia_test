@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['assets.suitdev.com'], // Biarkan untuk gambar yang bisa diakses langsung
+    domains: ['assets.suitdev.com'],
   },
-  // Tambahkan konfigurasi untuk proxy image
   experimental: {
     serverActions: true,
   },
-  // Izinkan filesystem access untuk cache
   webpack: (config, { isServer }) => {
     if (isServer) {
       config.resolve.fallback = {
