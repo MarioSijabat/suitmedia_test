@@ -115,7 +115,15 @@ export default function IdeasList() {
           <div key={item.id} className="bg-white border-2 shadow-md border-gray-100 rounded-lg overflow-hidden hover:shadow-lg transition-shadow">
             {item.small_image?.[0]?.url && (
               <div className="aspect-w-16 aspect-h-9 bg-white">
-                <Image
+              <Image
+                src="/placeholder.jpg" // Langsung gunakan placeholder
+                alt={item.title}
+                width={300}
+                height={169}
+                className="w-full h-48 object-cover"
+                loading="lazy"
+              />
+                {/* <Image
                   src={`/api/proxy-image?url=${encodeURIComponent(item.small_image[0].url)}`} // Proxy untuk mengambil gambar
                   alt={item.title}
                   width={300}
@@ -132,7 +140,7 @@ export default function IdeasList() {
                       e.target.src = '/placeholder.jpg'; // Fallback jika gambar gagal dimuat
                     }
                   }}
-                />
+                /> */}
               </div>
             )}
             <div className="p-4">
